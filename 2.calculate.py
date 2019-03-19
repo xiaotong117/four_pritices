@@ -5,8 +5,8 @@ import re
 
 problem = input()
 
-x = re.split('\D', problem, re.M | re.I)
-operator = re.search('\D', problem, re.M | re.I).group()
+x = re.split('\D', problem)
+operator = re.search('\D', problem).group()
 
 try:
     a = int(x[0])
@@ -16,5 +16,5 @@ try:
 except ZeroDivisionError:
     print("除数不能为0！")
 except ValueError:
-    print("请输入正确的四则运算格式！")
+    print("请输入正确的整数四则运算格式！")
 
