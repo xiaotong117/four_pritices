@@ -12,6 +12,7 @@ def pokepai2():
     return [[x, y] for x in ['红桃', '黑桃', '方块', '梅花'] for y in ['A', '2', '3', '4', '5', '6', '7', '8', '9',
                                                                '10', 'J', 'Q', 'K']]
 if __name__ == '__main__':
-    print('pokepai函数：', pokepai())
-    print('pokepai2函数：', pokepai())
+    print('扑克牌列表为：', pokepai2())
 
+a = [['黑桃', '9'], ['红心', '2']]
+print(a[1][1])
