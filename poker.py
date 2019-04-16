@@ -13,6 +13,3 @@ def pokepai2():
                                                                '10', 'J', 'Q', 'K']]
 if __name__ == '__main__':
     print('扑克牌列表为：', pokepai2())
-
-a = [['黑桃', '9'], ['红心', '2']]
-print(a[1][1])
