@@ -3,6 +3,11 @@
 
 import random
 
+'''
+题目：实现一个发牌小程序，能够支持对52张扑克牌洗牌、给4个玩家发牌、将玩家手中扑克牌按花色大小整理好（黑桃>红心>梅花>方块）。
+例如执行 Python deal.py，第1行打印出洗牌后的扑克牌，第2行到第5行分别打印出每个玩家初始收到的牌，
+第6行至第9行分别打印出每个玩家整理后的牌。
+'''
 def make_poker():
     '''扑克牌生成、乱序、发牌'''
     a = [[x, y] for x in ['红心', '黑桃', '方块', '梅花'] for y in ['A', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -19,20 +24,6 @@ def make_poker():
 
 def sort_num(list):
     '''扑克牌按大小排序'''
-    # for x in range(len(list)):
-    #     if "A" in list[x]:
-    #         s1 = list[x]
-    #         list[x] = list[0]
-    #         list[0] = s1
-    #         continue
-    #     for y in range(x+1,len(list)):
-    #         if list[x] > list[y]:
-    #             s2 = list[x]
-    #             list[x] = list[y]
-    #             list[y] = s2
-    #             continue
-    # return list
-
     def shuzi(a):
         if 'A' in a:
             return 1
@@ -65,7 +56,7 @@ def sort_num(list):
     return list
 
 def sort(list):
-    '''排序：将玩家手中扑克牌按花色大小整理好（黑桃>红心>梅花>方块）'''
+    '''排序：将玩家手中扑克牌按花色整理好（黑桃>红心>梅花>方块）'''
     aa = []
     bb = []
     cc = []

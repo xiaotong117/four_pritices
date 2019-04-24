@@ -3,6 +3,12 @@
 
 import time, pickle,os
 
+'''
+题目：生成100个银行卡卡号，卡号以6102009开头， 后面3位依次是 （001， 002， 003 …… 100），默认每个卡号的初始密码为"admin123"，
+输入卡号和密码信息， 判断是否登录成功。在上题的基础上，登录成功后可以进行账户余额查询、存款、取款、转账、修改密码、
+注销账户的功能，输出一个完整的银行卡系统。
+'''
+
 def make_card():
     card = {}
     card_info = {}
@@ -63,7 +69,7 @@ def transfer(dict2, account):
     print('请输入转账账户：')
     account2 = input()
     if account2 not in dict2:
-        print('请输入有效的转账账户：')
+        print('请输入有效的转账账户！')
         return 0
     print('请输入转账金额：')
     amount = input()
@@ -156,8 +162,6 @@ if __name__ == '__main__':
             else :print('请输入有效的操作序列！')
 
 
-        print(dict1)
-        print(dict2)
         with open('dict1.pickle', 'wb') as f:
             pickle.dump(dict1, f)
         with open('dict2.pickle', 'wb') as f:
