@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*- 
 
-animals = 'eels'
-print(f'My hovercraft is full of {animals !r}.')
+def fwe():
+    print('456')
+if __name__ == "__main__":
+    print('123')

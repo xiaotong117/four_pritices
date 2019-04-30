@@ -36,10 +36,11 @@ def balance(dict2, account):
 def deposit(dict2, account):
     print('请输入存款金额：')
     amount = input()
-    if float(amount)< 0:
-        print('请输入正确的金额！')
-        return 0
+
     try:
+        if float(amount) < 0:
+            print('请输入正确的金额！')
+            return 0
         dict2[account] += float(amount)
         print('存款成功！')
         return 1
@@ -50,10 +51,10 @@ def deposit(dict2, account):
 def withdraw(dict2, account):
     print('请输入取款金额：')
     amount = input()
-    if float(amount)<0:
-        print('请输入正确的金额！')
-        return 0
     try:
+        if float(amount) < 0:
+            print('请输入正确的金额！')
+            return 0
         if dict2[account] < float(amount):
             print('您的账户余额不足！')
             return 0
@@ -77,7 +78,7 @@ def transfer(dict2, account):
         print('请输入正确的金额！')
         return 0
     try:
-        if dict2[account] > float(amount):
+        if dict2[account] >= float(amount):
             dict2[account] -= float(amount)
             dict2[account2] += float(amount)
             print('转账成功！')
