@@ -5,6 +5,6 @@
 # basket=set("apple")
 # print(basket[0])
 
-import qwe.asd
+import xuping.account_check
 
 print('777')
