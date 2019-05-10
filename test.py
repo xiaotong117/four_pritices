@@ -5,6 +5,9 @@
 # basket=set("apple")
 # print(basket[0])
 
-import xuping.account_check
-
-print('777')
+import os
+def open_app(app_dir):
+    os.startfile(app_dir)
+if __name__ == "__main__":
+    app_dir = r'C:\Users\Administrator\PycharmProjects\four_pritices\xuping\abc.xlsx'
+    open_app(app_dir)
