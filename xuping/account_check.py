@@ -13,7 +13,7 @@ if __name__ == "__main__":
     break_flag = 1
     while break_flag:
         time.sleep(1)
-        print('1、预加载数据；2、数据校验；3、查看结果；4、退出系统')
+        print('\n1、预加载数据；2、数据校验；3、查看结果；4、退出系统')
         a = input()
         if a == '1':
             try:
