@@ -21,12 +21,28 @@ def compare(file):
     ws.title = '数据校验结果'
     ws.append(['订单号', '订单表价格', '第三方价格', '校验结果'])
 
-    for k in dict1.keys():
-        if dict1[k] == dict2[k]:
-            ws.append([k, dict1[k], dict2[k], '校验成功'])
+    for k in list(dict1.keys()):
+        if k in dict2:
+            if dict1[k] == dict2[k]:
+                ws.append([k, dict1[k], dict2[k], '校验成功'])
+                del dict1[k]
+                del dict2[k]
+            else:
+                ws.append([k, dict1[k], dict2[k], '校验失败'])
+                ws.cell(ws.max_row,4).fill = PatternFill(fill_type='solid', fgColor='FF0000')
+                mail_flag = 1
+                contant.append(k)
+                del dict1[k]
+                del dict2[k]
         else:
-            ws.append([k, dict1[k], dict2[k], '校验失败'])
-            ws.cell(ws.max_row,4).fill = PatternFill(fill_type='solid', fgColor='FF0000')
+            ws.append([k, dict1[k], 'Null', '校验失败'])
+            ws.cell(ws.max_row, 4).fill = PatternFill(fill_type='solid', fgColor='FF0000')
+            mail_flag = 1
+            contant.append(k)
+    if dict2:
+        for k in dict2.keys():
+            ws.append([k, 'Null', dict2[k], '校验失败'])
+            ws.cell(ws.max_row, 4).fill = PatternFill(fill_type='solid', fgColor='FF0000')
             mail_flag = 1
             contant.append(k)
 
