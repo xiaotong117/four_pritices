@@ -2,15 +2,15 @@
 # -*- coding: UTF-8 -*- 
 
 import openpyxl
-from xuping import config
+from xuping import tools
 from openpyxl.styles import PatternFill
 
 def compare(file):
     wb = openpyxl.load_workbook(file)
     ws1 = wb.get_sheet_by_name('测试数据')
     ws2 = wb.get_sheet_by_name('预期数据')
-    dict1 = config.pull(ws1)
-    dict2 = config.pull(ws2)
+    dict1 = tools.pull(ws1)
+    dict2 = tools.pull(ws2)
     mail_flag = 0
     contant = []
 
@@ -46,7 +46,7 @@ def compare(file):
             mail_flag = 1
             contant.append(k)
 
-    config.sheet_layout(ws)
+    tools.sheet_layout(ws)
     for col in ['A', 'B', 'C', 'D']:
         ws.column_dimensions[col].width = 30
 
@@ -57,7 +57,7 @@ def compare(file):
         for x in contant:
             text += x + '\n'
         message = '下列订单对账出错：\n'+ text + '\n详情请查看业务金额核对脚本结果！'
-        config.mail('zhangt@shinemo.com', message, '对账出错了！')
+        tools.mail('zhangt@shinemo.com', message, '对账出错了！')
 
 
 

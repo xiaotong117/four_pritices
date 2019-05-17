@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*- 
 
-from xuping import config
+from xuping import config, tools
 import pymysql, openpyxl
 
 def get_third_price(file):
@@ -20,7 +20,7 @@ def get_third_price(file):
         for row in results:
             ws.append(row)
             # print(row)
-        config.sheet_layout(ws)
+        tools.sheet_layout(ws)
         for col in ['A', 'B', 'C', 'D']:
             ws.column_dimensions[col].width = 30
 
