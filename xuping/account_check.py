@@ -11,9 +11,12 @@ if __name__ == "__main__":
     nowtime = time.strftime("%Y-%m-%d", time.localtime())
     file = '业务金额核对' + nowtime +'.xlsx'
     break_flag = 1
+    print('************************************')
+    print('*********滴滴订单数据校验系统********')
+    print('************************************')
     while break_flag:
         time.sleep(1)
-        print('\n1、预加载数据；2、数据校验；3、查看结果；4、退出系统')
+        print('\n请输入操作代码：\n1、预加载数据；2、数据校验；3、查看结果；4、退出系统')
         a = input()
         if a == '1':
             try:
