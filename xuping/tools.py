@@ -5,6 +5,20 @@ from openpyxl.styles import Font, Border, Side, Alignment
 import smtplib
 from email.mime.text import MIMEText
 from email.utils import formataddr
+import pymysql
+from xuping import config
+
+
+'''拉取订单数据'''
+def pull_data(status=None, sub_status, account_type, pay_channel_types):
+    conn = pymysql.connect(**config.DB_CONFIG)
+    cursor = conn.cursor()
+    cursor.execute(config.SQL_order_price%(status, sub_status, account_type, pay_channel_types))
+    results = cursor.fetchall()
+    pass
+
+
+
 
 
 '''Excel表格格式优化'''

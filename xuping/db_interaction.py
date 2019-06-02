@@ -11,6 +11,8 @@ def get_db_price(file):
     try:
         cursor.execute(config.SQL_order_price)
         results = cursor.fetchall()
+        print(type(results))
+        print(results)
 
         wb = openpyxl.Workbook()
         ws = wb.active
@@ -31,5 +33,5 @@ def get_db_price(file):
     conn.close()
     wb.save(file)
 
-# file = '业务金额核对2019-05-09.xlsx'
-# get_db_price(file)
+file = '业务金额核对2019-05-09.xlsx'
+get_db_price(file)

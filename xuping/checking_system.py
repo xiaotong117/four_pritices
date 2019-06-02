@@ -5,7 +5,7 @@ import time
 import win32api
 from xuping.db_interaction import get_db_price
 from xuping.get_third_data import get_third_price
-from xuping.compare import compare
+from xuping.check import compare
 
 if __name__ == "__main__":
     nowtime = time.strftime("%Y-%m-%d", time.localtime())
