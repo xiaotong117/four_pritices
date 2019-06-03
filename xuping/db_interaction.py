@@ -5,21 +5,13 @@ from xuping import config, tools
 import pymysql, openpyxl
 
 def get_db_price(file):
-    conn = pymysql.connect(**config.DB_CONFIG)
-    cursor = conn.cursor()
-
     try:
-        cursor.execute(config.SQL_order_price)
-        results = cursor.fetchall()
-        print(type(results))
-        print(results)
-
         wb = openpyxl.Workbook()
         ws = wb.active
         ws.title = '测试数据'
-        ws.append(['订单号', '订单金额', '下单人', '支付时间'])
+        ws.append(['订单号', '订单类型', '订单金额', '下单人', '下单时间'])
 
-        for row in results:
+        for row in tools.pull_data(20001):
             ws.append(row)
 
         tools.sheet_layout(ws)
@@ -29,8 +21,6 @@ def get_db_price(file):
     except:
         print ("Error: unable to fetch data")
 
-
-    conn.close()
     wb.save(file)
 
 file = '业务金额核对2019-05-09.xlsx'

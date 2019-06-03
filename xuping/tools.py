@@ -10,14 +10,32 @@ from xuping import config
 
 
 '''拉取订单数据'''
-def pull_data(status=None, sub_status, account_type, pay_channel_types):
-    conn = pymysql.connect(**config.DB_CONFIG)
-    cursor = conn.cursor()
-    cursor.execute(config.SQL_order_price%(status, sub_status, account_type, pay_channel_types))
-    results = cursor.fetchall()
-    pass
+def pull_data(sub_status):
+    try:
+        conn = pymysql.connect(**config.DB_CONFIG)
+        cursor = conn.cursor()
+        cursor.execute(config.SQL_order_price%(sub_status))
+        results = cursor.fetchall()
+    except:
+        print('DB连接错误')
+        s = []
+        for x in list(results):
+            x = list(x)
+            if x[1] == 0:
+                x[1] = '因公订单'
+            elif x[1] == 2:
+                if x[2] == 16:
+                    x[1] = '积分订单'
+                elif x[2] == 64:
+                    x[1] = '彩豆订单'
+            else:
+                x[1] = '无效订单'
+            x.pop(2)
+            s.append(x)
 
-
+    finally:
+        conn.close()
+        return s
 
 
 

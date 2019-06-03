@@ -11,8 +11,8 @@ DB_CONFIG = {
 }
 
 '''订单表数据SQL查询语句'''
-SQL_order_price = 'select order_id,price,update_user_name,gmt_pay from buy_order_new where biz_type = 3 ' \
-                  'and order_status = %s and order_sub_status = %s and account_type = %s and pay_channel_type = %s ' \
+SQL_order_price = 'select order_id,account_type,pay_channel_types,price,update_user_name,gmt_create ' \
+                  'from buy_order_new where biz_type = 3 and order_sub_status = %s ' \
                   'order by id desc'
 
 '''第三方数据SQL查询语句'''
