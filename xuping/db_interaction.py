@@ -1,25 +1,27 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from xuping import config, tools
-import pymysql, openpyxl
+from xuping import tools
+import openpyxl
 
 def get_db_price(file):
     try:
         wb = openpyxl.Workbook()
-        ws = wb.active
-        ws.title = '测试数据'
-        ws.append(['订单号', '订单类型', '订单金额', '下单人', '下单时间'])
+        for x in [20001, 20003, 20007, 20009, 20017, 20019, 20021]:
+            ws = wb.create_sheet()
+            ws.title = '订单状态' + str(x)
+            ws.append(['订单号', '订单类型', '订单金额', '下单人', '下单时间'])
 
-        for row in tools.pull_data(20001):
-            ws.append(row)
+            for row in tools.pull_data(x):
+                ws.append(row)
 
-        tools.sheet_layout(ws)
-        for col in ['A', 'B', 'C', 'D']:
-            ws.column_dimensions[col].width = 30
+            tools.sheet_layout(ws)
+            for col in ['A', 'B', 'C', 'D', 'E']:
+                ws.column_dimensions[col].width = 30
 
+        wb.remove_sheet(wb.get_sheet_by_name("Sheet"))
     except:
-        print ("Error: unable to fetch data")
+        print("Error: unable to fetch data")
 
     wb.save(file)
 

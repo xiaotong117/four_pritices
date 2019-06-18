@@ -15,7 +15,7 @@ def get_third_price(file):
         wb = openpyxl.load_workbook(file)
         ws = wb.create_sheet()
         ws.title = '预期数据'
-        ws.append(['订单号', '订单金额', '下单人', '支付时间',])
+        ws.append(['订单号', '订单金额', '下单人', '支付时间'])
 
         for row in results:
             ws.append(row)

@@ -2,9 +2,13 @@
 # -*- coding: UTF-8 -*-
 
 
-import os
-def open_app(app_dir):
-    os.startfile(app_dir)
-if __name__ == "__main__":
-    app_dir = r'C:\Users\Administrator\PycharmProjects\four_pritices\xuping\abc.xlsx'
-    open_app(app_dir)
+
+
+class Myclass(object):
+    def __init__(self, x):
+        self.x = x
+
+
+c1 = Myclass(11)
+c2 = Myclass.__new__(Myclass, 12)
+print(c1.x, c2.x)
