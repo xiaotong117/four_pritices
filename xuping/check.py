@@ -60,4 +60,13 @@ def compare(file):
         tools.mail('zhangt@shinemo.com', message, '对账出错了！')
 
 
+class check_status(object):
+    def __init__(self, order_list):
+        self.order_list = order_list
+
+    def check_20001(self, order_list):
+        for order in order_list:
+
+
+
 

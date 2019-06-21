@@ -19,17 +19,14 @@ def pull_data(sub_status):
         results = cursor.fetchall()
         for x in list(results):
             x = list(x)
-            if x[1] == 2:
+            if x[1] == 0:
                 x[1] = '因公订单'
-            elif x[1] == 0:
-                if x[2] == 16:
-                    x[1] = '积分订单'
-                elif x[2] == 64:
-                    x[1] = '彩豆订单'
-                else:x[1] = '无效订单'
+            elif x[1] == 8:
+                x[1] = '积分订单'
+            elif x[1] == 13:
+                x[1] = '彩豆订单'
             else:
                 x[1] = '无效订单'
-            x.pop(2)
             s.append(x)
     except:
         print('DB连接错误')
