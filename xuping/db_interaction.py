@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from xuping import tools
+import logging
 import openpyxl
 
 def get_db_price(file):
@@ -21,7 +22,7 @@ def get_db_price(file):
 
         wb.remove_sheet(wb.get_sheet_by_name("Sheet"))
     except:
-        print("Error: unable to fetch data")
+        logging.error("Error: unable to fetch data")
 
     wb.save(file)
 

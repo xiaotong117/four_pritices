@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*- 
 
 import openpyxl
+import logging
 from xuping import tools
 from openpyxl.styles import PatternFill
 
@@ -64,8 +65,35 @@ class check_status(object):
     def __init__(self, order_list):
         self.order_list = order_list
 
-    def check_20001(self, order_list):
+    def check_20001(order_list):
         for order in order_list:
+            #校验buy_order_new
+            a = tools.pull_buy_order_new(order)[0]
+            if a[1] == 0:
+                if a[0]==2 and a[2]!= '' and a[3]!= 0:
+                    continue
+                else:
+                    print("buy_order_new表校验失败！")
+            elif a[1] == -1:
+                if a[0] == 2 and a[2] != '' and a[3] != 0:
+                    continue
+                else:
+                    print("buy_order_new表校验失败！")
+            else:
+                print('错了！')
+
+            # 校验car_order
+            b = tools.pull_buy_order_new(order)[1]
+            if b[0] == 3 and all(x != '' for x in b):
+                continue
+            else:
+                print('car_order表校验失败！')
+
+
+a = check_status.check_20001(['010031908150000000134974'])
+
+
+
 
 
 

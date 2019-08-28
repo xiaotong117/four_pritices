@@ -6,6 +6,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.utils import formataddr
 import pymysql
+import logging
 from xuping import config
 
 
@@ -13,7 +14,7 @@ from xuping import config
 def pull_data(sub_status):
     try:
         s = []
-        conn = pymysql.connect(**config.DB_CONFIG)
+        conn = pymysql.connect(**config.DB_CONFIG_BUY)
         cursor = conn.cursor()
         cursor.execute(config.SQL_order_price%(sub_status))
         results = cursor.fetchall()
@@ -29,13 +30,39 @@ def pull_data(sub_status):
                 x[1] = '无效订单'
             s.append(x)
     except:
-        print('DB连接错误')
+        logging.error("DB连接错误", exc_info=True)
 
     finally:
         conn.close()
         return s
 
+'''拉取buy_order_new数据：
+    0:order_type
+    1:order_status
+    2:third_id
+    3:price
+    4:account_type
+    5:pay_channel_types'''
+def pull_buy_order_new(order_id):
+    try:
+        s = []
+        conn = pymysql.connect(**config.DB_CONFIG_BUY)
+        cursor = conn.cursor()
+        cursor.execute(config.SQL_buy_order_new%(order_id))
+        result1 = cursor.fetchall()
+        for x in list(result1):
+            s.append(list(x))
+        cursor.execute(config.SQL_car_order % (order_id))
+        result2 = cursor.fetchall()
+        for x in list(result2):
+            s.append(list(x))
+    except:
+        logging.error("DB连接错误", exc_info=True)
 
+    finally:
+        conn.close()
+        print(s)
+        return s
 
 '''Excel表格格式优化'''
 def sheet_layout(ws):

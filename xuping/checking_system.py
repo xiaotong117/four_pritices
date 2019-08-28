@@ -21,7 +21,7 @@ if __name__ == "__main__":
         if a == '1':
             try:
                 get_db_price(file)
-                get_third_price(file)
+                # get_third_price(file)
                 print('数据加载成功！')
             except:
                 print('哎呀，出错了！')
