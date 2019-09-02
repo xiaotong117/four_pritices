@@ -10,6 +10,14 @@ DB_CONFIG_BUY = {
     'db': 'buy'
 }
 
+DB_CONFIG_TC = {
+    'host': '10.0.10.42',
+    'port': 3306,
+    'user': 'root',
+    'passwd': 'shinemo123',
+    'db': 'tc'
+}
+
 DB_CONFIG_WELFARE = {
     'host': '10.0.10.42',
     'port': 3306,
@@ -37,8 +45,15 @@ SQL_car_order = 'select biz_type,ride_type,car_type,car_order_type,start_address
                 'from car_order where order_id = \'%s\''
 
 '''拉取tc.user_frezen_detail数据'''
-SQL_user_frezen_detail = ''
+SQL_user_frezen_detail = 'select biz_type,money,frozen_status from user_frozen_detail where order_id = \'%s\''
+
+'''拉取tc.pay_detail数据'''
+SQL_pay_detail = 'select biz_type,price,pay_status from pay_detail where order_id = \'%s\''
 
 '''拉取shinemo_welfare.account_freeze数据'''
-SQL_account_freeze = ''
+SQL_account_freeze = 'select amount,freeze_status from account_freeze where order_id = \'%s\''
+
+'''拉取shinemo_welfare.welfare_turnover数据'''
+SQL_welfare_turnover = 'select account_type,turnover_type,turnover_sub_type,remark,amount,third_id,' \
+                       'turnover_status from welfare_turnover where order_id = \'%s\''
 

@@ -36,26 +36,18 @@ def pull_data(sub_status):
         conn.close()
         return s
 
-'''拉取buy_order_new数据：
-    0:order_type
-    1:order_status
-    2:third_id
-    3:price
-    4:account_type
-    5:pay_channel_types'''
-def pull_buy_order_new(order_id):
+'''拉取db库数据'''
+def pull_data(db_config, table_list, order_id):
     try:
         s = []
-        conn = pymysql.connect(**config.DB_CONFIG_BUY)
+        conn = pymysql.connect(**db_config)
         cursor = conn.cursor()
-        cursor.execute(config.SQL_buy_order_new%(order_id))
-        result1 = cursor.fetchall()
-        for x in list(result1):
-            s.append(list(x))
-        cursor.execute(config.SQL_car_order % (order_id))
-        result2 = cursor.fetchall()
-        for x in list(result2):
-            s.append(list(x))
+        for x in table_list:
+            cursor.execute(x%(order_id))
+            result = cursor.fetchall()
+            for x in list(result):
+                s.append(list(x))
+
     except:
         logging.error("DB连接错误", exc_info=True)
 
