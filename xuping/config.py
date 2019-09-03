@@ -23,7 +23,7 @@ DB_CONFIG_WELFARE = {
     'port': 3306,
     'user': 'root',
     'passwd': 'shinemo123',
-    'db': 'welfare'
+    'db': 'shinemo_welfare'
 }
 
 '''订单表数据SQL查询语句'''
@@ -36,7 +36,7 @@ SQL_order_price = 'select order_id,source_app,price,update_user_name,gmt_create 
 #                   'and order_status = 12'
 
 '''拉取buy_order_new数据'''
-SQL_buy_order_new = 'select order_type,order_status,third_id,price,account_type,pay_channel_types from buy_order_new where order_id = \'%s\''
+SQL_buy_order_new = 'select order_type,order_status,third_id,price,source_app from buy_order_new where order_id = \'%s\''
 
 '''拉取car_order数据'''
 SQL_car_order = 'select biz_type,ride_type,car_type,car_order_type,start_address,end_address,passenger_name,' \
@@ -51,9 +51,9 @@ SQL_user_frezen_detail = 'select biz_type,money,frozen_status from user_frozen_d
 SQL_pay_detail = 'select biz_type,price,pay_status from pay_detail where order_id = \'%s\''
 
 '''拉取shinemo_welfare.account_freeze数据'''
-SQL_account_freeze = 'select amount,freeze_status from account_freeze where order_id = \'%s\''
+SQL_account_freeze = 'select amount,freeze_status from account_freeze where third_id = \'%s\''
 
 '''拉取shinemo_welfare.welfare_turnover数据'''
 SQL_welfare_turnover = 'select account_type,turnover_type,turnover_sub_type,remark,amount,third_id,' \
-                       'turnover_status from welfare_turnover where order_id = \'%s\''
+                       'turnover_status from welfare_turnover where third_id = \'%s\''
 

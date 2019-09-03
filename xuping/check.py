@@ -65,55 +65,87 @@ class check_status(object):
     def __init__(self, order_list):
         self.order_list = order_list
 
-    def check_20001(order_list):
+    def check_base(order_list):
         for order in order_list:
             #校验buy_order_new
             b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new, config.SQL_car_order], order)
             a = b_data[0]
             if a[1] == 0:
                 if a[0]==2 and a[2]!= '' and a[3]!= 0:
-                    continue
+                    pass
                 else:
                     print("buy_order_new表校验失败！")
+                    continue
             elif a[1] == -1:
                 if a[0] == 2 and a[2] != '' and a[3] != 0:
-                    continue
+                    pass
                 else:
                     print("buy_order_new表校验失败！")
+                    continue
             else:
-                print('错了！')
+                print('订单\'%s\'状态错误！'% order)
+                continue
 
             # 校验car_order
             b = b_data[1]
             if b[0] == 3 and all(x != '' for x in b):
-                continue
+                pass
             else:
                 print('car_order表校验失败！')
+                continue
 
             # 校验冻结表
-            if a[3] == 2:
-                t_data = tools.pull_data(config.DB_CONFIG_TC, [config.SQL_user_frezen_detail, config.SQL_pay_detail],
-                                         order)
-                c = t_data[0]
-
-
-            elif a[4] == 16:
-                w_data = tools.pull_data(config.DB_CONFIG_WELFARE,
-                                         [config.SQL_account_freeze, config.SQL_welfare_turnover], order)
-
+            if a[1] == -1:
                 pass
-
-            elif a[4] == 64:
-                w_data = tools.pull_data(config.DB_CONFIG_WELFARE,
-                                         [config.SQL_account_freeze, config.SQL_welfare_turnover], order)
-
-                pass
-
             else:
-                print('错了！')
+                if a[4] == 0:
+                    t_data = tools.pull_data(config.DB_CONFIG_TC, [config.SQL_user_frezen_detail, config.SQL_pay_detail],
+                                            order)
+                    c = t_data[0]
+                    if c[0] == 3 and c[1] == a[3] and a[2] == 1:
+                        pass
+                    else:
+                        print('user_frezen_detail表校验失败！')
+                        continue
+
+                elif a[4] == 8:
+                    w_data = tools.pull_data(config.DB_CONFIG_WELFARE,
+                                            [config.SQL_account_freeze, config.SQL_welfare_turnover], order)
+                    c = w_data[0]
+                    if c[0] == a[3]*1.5 and c[1] == 1:
+                        pass
+                    else:
+                        print('account_freeze表校验失败！')
+                        continue
+
+                elif a[4] == 13:
+                    w_data = tools.pull_data(config.DB_CONFIG_WELFARE,
+                                            [config.SQL_account_freeze, config.SQL_welfare_turnover], order)
+                    c = w_data[0]
+                    if c[0] == a[3]*2 and c[1] == 1:
+                        pass
+                    else:
+                        print('account_freeze表校验失败！')
+                        continue
+
+                else:
+                    print('订单\'%s\'类型错误！' % order)
+                    continue
+
+    def check_20003(order_list):
+        for order in order_list:
+            # 校验car_order
+            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new, config.SQL_car_order], order)
+            b = b_data[1]
+            if b[0] == 3 and all(x != '' for x in b):
+                pass
+            else:
+                print('car_order表校验失败！')
+                continue
 
 
-a = check_status.check_20001(['010031908150000000134974'])
+
+a = check_status.check_base(['010031908150000000134974'])
 
 
 

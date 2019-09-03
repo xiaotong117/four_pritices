@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from xuping import tools
+from xuping import tools,config
 import logging
 import openpyxl
 
@@ -13,8 +13,8 @@ def get_db_price(file):
             ws.title = '订单状态' + str(x)
             ws.append(['订单号', '订单类型', '订单金额', '下单人', '下单时间'])
 
-            for row in tools.pull_data(x):
-                ws.append(row)
+            for row in tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_order_price], x):
+                ws.append(row[0])
 
             tools.sheet_layout(ws)
             for col in ['A', 'B', 'C', 'D', 'E']:
