@@ -39,9 +39,21 @@ SQL_order_price = 'select order_id,source_app,price,update_user_name,gmt_create 
 SQL_buy_order_new = 'select order_type,order_status,third_id,price,source_app from buy_order_new where order_id = \'%s\''
 
 '''拉取car_order数据'''
-SQL_car_order = 'select biz_type,ride_type,car_type,car_order_type,start_address,end_address,passenger_name,' \
+SQL_car_order1 = 'select biz_type,ride_type,car_type,car_order_type,start_address,end_address,passenger_name,' \
                 'passenger_phone,order_create_time,order_usage_time,order_expire_time,start_longitude,start_latitude,' \
                 'start_city_code,start_city_name,end_longitude,end_latitude,end_city_code,end_city_name ' \
+                'from car_order where order_id = \'%s\''
+SQL_car_order2 = 'select biz_type,ride_type,car_type,car_order_type,start_address,end_address,passenger_name,' \
+                'passenger_phone,order_create_time,order_usage_time,order_expire_time,start_longitude,start_latitude,' \
+                'start_city_code,start_city_name,end_longitude,end_latitude,end_city_code,end_city_name,drive_name,drive_phone,driver_car_type,driver_car_color,driver_card,driver_avatar,driver_score ' \
+                'from car_order where order_id = \'%s\''
+SQL_car_order3 = 'select biz_type,ride_type,car_type,car_order_type,start_address,end_address,passenger_name,' \
+                'passenger_phone,order_create_time,order_usage_time,order_expire_time,start_longitude,start_latitude,' \
+                'start_city_code,start_city_name,end_longitude,end_latitude,end_city_code,end_city_name,drive_name,drive_phone,driver_car_type,driver_car_color,driver_card,driver_avatar,driver_score,driver_arrived_time ' \
+                'from car_order where order_id = \'%s\''
+SQL_car_order4 = 'select biz_type,ride_type,car_type,car_order_type,start_address,end_address,passenger_name,' \
+                'passenger_phone,order_create_time,order_usage_time,order_expire_time,start_longitude,start_latitude,' \
+                'start_city_code,start_city_name,end_longitude,end_latitude,end_city_code,end_city_name,drive_name,drive_phone,driver_car_type,driver_car_color,driver_card,driver_avatar,driver_score,driver_arrived_time ' \
                 'from car_order where order_id = \'%s\''
 
 '''拉取tc.user_frezen_detail数据'''

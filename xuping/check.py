@@ -68,7 +68,7 @@ class check_status(object):
     def check_base(order_list):
         for order in order_list:
             #校验buy_order_new
-            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new, config.SQL_car_order], order)
+            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new], order)
             a = b_data[0]
             if a[1] == 0:
                 if a[0]==2 and a[2]!= '' and a[3]!= 0:
@@ -84,14 +84,6 @@ class check_status(object):
                     continue
             else:
                 print('订单\'%s\'状态错误！'% order)
-                continue
-
-            # 校验car_order
-            b = b_data[1]
-            if b[0] == 3 and all(x != '' for x in b):
-                pass
-            else:
-                print('car_order表校验失败！')
                 continue
 
             # 校验冻结表
@@ -132,11 +124,33 @@ class check_status(object):
                     print('订单\'%s\'类型错误！' % order)
                     continue
 
+    def check_20001(order_list):
+        for order in order_list:
+            # 校验car_order
+            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order1], order)
+            b = b_data[0]
+            if b[0] == 3 and all(x != '' for x in b):
+                pass
+            else:
+                print('car_order表校验失败！')
+                continue
+
     def check_20003(order_list):
         for order in order_list:
             # 校验car_order
-            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new, config.SQL_car_order], order)
-            b = b_data[1]
+            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order2], order)
+            b = b_data[0]
+            if b[0] == 3 and all(x != '' for x in b):
+                pass
+            else:
+                print('car_order表校验失败！')
+                continue
+
+    def check_20007(order_list):
+        for order in order_list:
+            # 校验car_order
+            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order3], order)
+            b = b_data[0]
             if b[0] == 3 and all(x != '' for x in b):
                 pass
             else:
@@ -145,7 +159,7 @@ class check_status(object):
 
 
 
-a = check_status.check_base(['010031908150000000134974'])
+a = check_status.check_20003(['010031904020000004358836'])
 
 
 
