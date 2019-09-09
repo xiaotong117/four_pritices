@@ -68,7 +68,7 @@ class check_status(object):
     def check_base(order_list):
         for order in order_list:
             #校验buy_order_new
-            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new], order)
+            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new1], order)
             a = b_data[0]
             if a[1] == 0:
                 if a[0]==2 and a[2]!= '' and a[3]!= 0:
@@ -157,6 +157,42 @@ class check_status(object):
                 print('car_order表校验失败！')
                 continue
 
+    def check_20009(order_list):
+        for order in order_list:
+            # 校验car_order
+            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order4], order)
+            b = b_data[0]
+            if b[0] == 3 and all(x != '' for x in b):
+                pass
+            else:
+                print('car_order表校验失败！')
+                continue
+
+    def check_20017(order_list):
+        for order in order_list:
+            # 校验car_order
+            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new2, config.SQL_car_order5], order)
+            b = b_data[1]
+            if b[0] == 3 and all(x != '' for x in b):
+                pass
+            else:
+                print('car_order表校验失败！')
+                continue
+
+            a = b_data[0]
+            if a[9] == 0:
+                if a[0]==2 and a[1]==1 and a[2]==12 and a[3]!="" and a[4]!="" and a[5]!="" and a[6]!=0 and a[7]!=0:
+                    pass
+                else:
+                    print("buy_order_new表校验失败！")
+                    continue
+
+            elif a[9] == 8 or a[9] == 13:
+                if a[0]==2 and a[1]==1 and a[2]==12 and a[3]!="" and a[4]!="" and a[5]!="" and a[6]!=0 and a[8]!=0:
+                    pass
+                else:
+                    print("buy_order_new表校验失败！")
+                    continue
 
 
 a = check_status.check_20003(['010031904020000004358836'])
