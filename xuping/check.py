@@ -70,13 +70,7 @@ class check_status(object):
             #校验buy_order_new
             b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new1], order)
             a = b_data[0]
-            if a[1] == 0:
-                if a[0]==2 and a[2]!= '' and a[3]!= 0:
-                    pass
-                else:
-                    print("buy_order_new表校验失败！")
-                    continue
-            elif a[1] == -1:
+            if a[1] in [-1,0]:
                 if a[0] == 2 and a[2] != '' and a[3] != 0:
                     pass
                 else:
@@ -184,16 +178,58 @@ class check_status(object):
                 if a[0]==2 and a[1]==1 and a[2]==12 and a[3]!="" and a[4]!="" and a[5]!="" and a[6]!=0 and a[7]!=0:
                     pass
                 else:
-                    print("buy_order_new表校验失败！")
+                    print("buy_order表校验失败！")
+                    continue
+                t_data = tools.pull_data(config.DB_CONFIG_TC, [config.SQL_user_frezen_detail, config.SQL_pay_detail], order)
+                c = t_data[0]
+                d = t_data[1]
+                if c[0] == 3 and c[1] !='' and c[2] == 2 and d[0] == 3 and d[1] == a[6] and d[2] == 6:
+                    pass
+                else:
+                    print("user_frezen_detail/pay_detail表校验失败！")
                     continue
 
             elif a[9] == 8 or a[9] == 13:
                 if a[0]==2 and a[1]==1 and a[2]==12 and a[3]!="" and a[4]!="" and a[5]!="" and a[6]!=0 and a[8]!=0:
                     pass
                 else:
-                    print("buy_order_new表校验失败！")
+                    print("buy_order表校验失败！")
+                    continue
+                t_data = tools.pull_data(config.DB_CONFIG_WELFARE, [config.SQL_account_freeze, config.SQL_welfare_turnover],
+                                         order)
+                c = t_data[0]
+                d = t_data[1]
+                if c[0] != '' and c[1] == 0 and d[0] == 0 and d[1] == 2 and d[2] == 3 and d[3] == '滴滴出行' and d[4] == a[6] and d[6] == 3:
+                    pass
+                else:
+                    print("account_freeze/welfare_turnover表校验失败！")
                     continue
 
+            else:
+                print('订单\'%s\'类型错误！' % order)
+                continue
+
+    def check_20019(order_list):
+        for order in order_list:
+            # 校验car_order
+            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order4], order)
+            b = b_data[0]
+            if b[0] == 3 and all(x != '' for x in b):
+                pass
+            else:
+                print('car_order表校验失败！')
+                continue
+
+    def check_20021(order_list):
+        for order in order_list:
+            # 校验car_order
+            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order1], order)
+            b = b_data[0]
+            if b[0] == 3 and all(x != '' for x in b):
+                pass
+            else:
+                print('car_order表校验失败！')
+                continue
 
 a = check_status.check_20003(['010031904020000004358836'])
 
