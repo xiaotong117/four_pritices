@@ -223,13 +223,28 @@ class check_status(object):
     def check_20021(order_list):
         for order in order_list:
             # 校验car_order
-            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order1], order)
-            b = b_data[0]
-            if b[0] == 3 and all(x != '' for x in b):
+            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new1, config.SQL_car_order1], order)
+            a = b_data[0]
+            b = b_data[1]
+            if a[0] == 2 and a[1] == 18 and a[2] != '' and a[3] == 0:
+                pass
+            else:
+                print("buy_order_new表校验失败！")
+                continue
+
+            if b[1] == 3 and all(x != '' for x in b):
                 pass
             else:
                 print('car_order表校验失败！')
                 continue
+
+            if a[4] == 0:
+                t_data = tools.pull_data(config.DB_CONFIG_TC, [config.SQL_user_frezen_detail], order)
+                c = t_data[0]
+
+
+            if a[4] == 8 or a[9] == 13:
+                pass
 
 a = check_status.check_20003(['010031904020000004358836'])
 
