@@ -14,7 +14,7 @@ def get_db_price(file):
             ws.append(['订单号', '订单类型', '订单金额', '下单人', '下单时间'])
 
             for row in tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_order_price], x):
-                ws.append(row[0])
+                ws.append(row)
 
             tools.sheet_layout(ws)
             for col in ['A', 'B', 'C', 'D', 'E']:
@@ -22,9 +22,10 @@ def get_db_price(file):
 
         wb.remove_sheet(wb.get_sheet_by_name("Sheet"))
     except:
-        logging.error("Error: unable to fetch data")
+
+        logging.error("Error: unable to fetch data", exc_info=True)
 
     wb.save(file)
 
-file = '业务金额核对2019-05-09.xlsx'
-get_db_price(file)
+# file = '业务金额核对2019-05-09.xlsx'
+# get_db_price(file)

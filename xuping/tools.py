@@ -37,13 +37,13 @@ def pull_data(sub_status):
         return s
 
 '''拉取db库数据'''
-def pull_data(db_config, table_list, order_id):
+def pull_data(db_config, table_list, order_sub_status):
     try:
         s = []
         conn = pymysql.connect(**db_config)
         cursor = conn.cursor()
         for x in table_list:
-            cursor.execute(x%(order_id))
+            cursor.execute(x%(order_sub_status))
             result = cursor.fetchall()
             for x in list(result):
                 s.append(list(x))
@@ -53,7 +53,7 @@ def pull_data(db_config, table_list, order_id):
 
     finally:
         conn.close()
-        print(s)
+        # print(s)
         return s
 
 '''Excel表格格式优化'''
@@ -73,11 +73,11 @@ def sheet_layout(ws):
             cell.border = border
 
 '''提取Excel数据到字典'''
-def pull(ws):
-    dict = {}
-    for x in range(2, ws.max_row + 1):
-        dict[ws.cell(x, 1).value] = ws.cell(x, 2).value
-    return dict
+# def pull(ws):
+#     dict = {}
+#     for x in range(2, ws.max_row + 1):
+#         dict[ws.cell(x, 1).value] = ws.cell(x, 2).value
+#     return dict
 
 '''发送邮件'''
 def mail(my_user, contant, title):
