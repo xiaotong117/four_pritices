@@ -17,3 +17,9 @@ if c[0] == a[0]*2 :
     print('111')
 
 
+try:
+    a=3
+except:
+    print('333')
+c = a+3
+print(c)

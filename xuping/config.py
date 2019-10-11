@@ -37,7 +37,7 @@ SQL_order_price = 'select order_id,source_app,price,update_user_name,gmt_create 
 
 '''拉取buy_order_new数据'''
 SQL_buy_order_new1 = 'select order_type,order_status,third_id,price,source_app from buy_order_new where order_id = \'%s\''
-SQL_buy_order_new2 = 'select order_type,status,order_status,third_id,gmt_pay,gmt_settlement_time,price,should_price,integral_price,source_app from buy_order_new where order_id = \'%s\''
+SQL_buy_order_new2 = 'select order_type,order_status,third_id,gmt_pay,gmt_settlement_time,price,should_price,integral_price,source_app from buy_order_new where order_id = \'%s\''
 
 
 '''拉取car_order数据'''
@@ -78,3 +78,6 @@ SQL_account_freeze = 'select amount,freeze_status from account_freeze where thir
 SQL_welfare_turnover = 'select account_type,turnover_type,turnover_sub_type,remark,amount,third_id,' \
                        'turnover_status from welfare_turnover where third_id = \'%s\''
 
+
+#订单校验白名单
+white_list = ['010031805040000001463623']
