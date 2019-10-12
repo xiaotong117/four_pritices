@@ -67,9 +67,12 @@ class check_status(object):
 
     def check_base(order_list):
         false = {}
+        db_buy = tools.db_connect(config.DB_CONFIG_BUY)
+        db_tc = tools.db_connect(config.DB_CONFIG_TC)
+        db_welfare = tools.db_connect(config.DB_CONFIG_WELFARE)
         for order in order_list:
             #校验buy_order_new
-            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new1], order)
+            b_data = tools.pull_data(db_buy, [config.SQL_buy_order_new1], order)
             a = b_data[0]
             if a[1] in [-1,0]:
                 if a[0] == 2 and a[2] != '' and a[3] != 0:
@@ -87,8 +90,7 @@ class check_status(object):
             else:
                 if a[4] == 0:
                     try:
-                        t_data = tools.pull_data(config.DB_CONFIG_TC, [config.SQL_user_frezen_detail, config.SQL_pay_detail],
-                                                order)
+                        t_data = tools.pull_data(db_tc, [config.SQL_user_frezen_detail, config.SQL_pay_detail], order)
                         c = t_data[0]
                         if c[0] == 3 and c[1] == a[3] and a[2] == 1:
                             pass
@@ -100,8 +102,7 @@ class check_status(object):
 
                 elif a[4] == 8:
                     try:
-                        w_data = tools.pull_data(config.DB_CONFIG_WELFARE,
-                                            [config.SQL_account_freeze, config.SQL_welfare_turnover], order)
+                        w_data = tools.pull_data(db_welfare, [config.SQL_account_freeze, config.SQL_welfare_turnover], order)
                         c = w_data[0]
                         if c[0] == a[3]*1.5 and c[1] == 1:
                             pass
@@ -113,8 +114,7 @@ class check_status(object):
 
                 elif a[4] == 13:
                     try:
-                        w_data = tools.pull_data(config.DB_CONFIG_WELFARE,
-                                            [config.SQL_account_freeze, config.SQL_welfare_turnover], order)
+                        w_data = tools.pull_data(db_welfare, [config.SQL_account_freeze, config.SQL_welfare_turnover], order)
                         c = w_data[0]
                         if c[0] == a[3]*2 and c[1] == 1:
                             pass
@@ -127,14 +127,18 @@ class check_status(object):
                 else:
                     false[order] = '订单类型错误！'
                     continue
+        tools.db_disconnect(db_buy)
+        tools.db_disconnect(db_tc)
+        tools.db_disconnect(db_welfare)
         return false
 
     def check_20001(order_list):
         false = {}
+        db_buy = tools.db_connect(config.DB_CONFIG_BUY)
         for order in order_list:
             # 校验car_order
             try:
-                b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order1], order)
+                b_data = tools.pull_data(db_buy, [config.SQL_car_order1], order)
                 b = b_data[0]
                 if b[0] == 3 and all(x != '' for x in b):
                     pass
@@ -143,14 +147,37 @@ class check_status(object):
                     continue
             except:
                 false[order] = 'car_order表校验失败！'
+        tools.db_disconnect(db_buy)
         return false
+
+    # def check_200011(order_list):
+    #     false = {}
+    #     a = []
+    #     db_buy = tools.db_connect(config.DB_CONFIG_BUY)
+    #     for order in order_list:
+    #         a.append(tools.pull_data(db_buy, [config.SQL_car_order1], order))
+    #     tools.db_disconnect(db_buy)
+    #
+    #     # 校验car_order
+    #     for b_data in a:
+    #         try:
+    #             b = b_data[0]
+    #             if b[0] == 3 and all(x != '' for x in b):
+    #                 pass
+    #             else:
+    #                 false[b[0]] = 'car_order表校验失败！'
+    #                 continue
+    #         except:
+    #             false[b[0]] = 'car_order表校验失败！'
+    #     return false
 
     def check_20003(order_list):
         false = {}
+        db_buy = tools.db_connect(config.DB_CONFIG_BUY)
         for order in order_list:
             # 校验car_order
             try:
-                b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order2], order)
+                b_data = tools.pull_data(db_buy, [config.SQL_car_order2], order)
                 b = b_data[0]
                 if b[0] == 3 and all(x != '' for x in b):
                     pass
@@ -159,14 +186,16 @@ class check_status(object):
                     continue
             except:
                 false[order] = 'car_order表校验失败！'
+        tools.db_disconnect(db_buy)
         return false
 
     def check_20007(order_list):
         false = {}
+        db_buy = tools.db_connect(config.DB_CONFIG_BUY)
         for order in order_list:
             # 校验car_order
             try:
-                b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order3], order)
+                b_data = tools.pull_data(db_buy, [config.SQL_car_order3], order)
                 b = b_data[0]
                 if b[0] == 3 and all(x != '' for x in b):
                     pass
@@ -175,14 +204,16 @@ class check_status(object):
                     continue
             except:
                 false[order] = 'car_order表校验失败！'
+        tools.db_disconnect(db_buy)
         return false
 
     def check_20009(order_list):
         false = {}
+        db_buy = tools.db_connect(config.DB_CONFIG_BUY)
         for order in order_list:
             # 校验car_order
             try:
-                b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order4], order)
+                b_data = tools.pull_data(db_buy, [config.SQL_car_order4], order)
                 b = b_data[0]
                 if b[0] == 3 and all(x != '' for x in b):
                     pass
@@ -191,24 +222,28 @@ class check_status(object):
                     continue
             except:
                 false[order] = 'car_order表校验失败！'
+        tools.db_disconnect(db_buy)
         return false
 
     def check_20017(order_list):
         false = {}
+        db_buy = tools.db_connect(config.DB_CONFIG_BUY)
+        db_tc = tools.db_connect(config.DB_CONFIG_TC)
+        db_welfare = tools.db_connect(config.DB_CONFIG_WELFARE)
         for order in order_list:
-            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new2, config.SQL_car_order5], order)
+            b_data = tools.pull_data(db_buy, [config.SQL_buy_order_new2, config.SQL_car_order5], order)
             a = b_data[0]
             try:
                 if a[8] == 0:
-                    if a[0] == 2 and  a[1] == 12 and a[2] != "" and a[3] != "" and a[4] != "" and a[
-                        5] != 0 and a[6] != 0:
+                    if a[0] == 2 and  a[1] == 12 and a[2] != "" and a[3] != "" and a[4] != "" and a[5] != 0 and \
+                            a[6] != 0:
                         pass
                     else:
                         false[order] = 'buy_order表校验失败！'
                         continue
                 if a[8] == 8 or a[8] == 13:
-                    if a[0] == 2 and a[1] == 12 and a[2] != "" and a[3] != "" and a[4] != "" and a[
-                        5] != 0 and a[7] != 0:
+                    if a[0] == 2 and a[1] == 12 and a[2] != "" and a[3] != "" and a[4] != "" and a[5] != 0 and\
+                            a[7] != 0:
                         pass
                     else:
                         false[order] = 'buy_order表校验失败！'
@@ -225,7 +260,7 @@ class check_status(object):
 
             if a[8] == 0:
                 try:
-                    t_data = tools.pull_data(config.DB_CONFIG_TC, [config.SQL_user_frezen_detail, config.SQL_pay_detail], order)
+                    t_data = tools.pull_data(db_tc, [config.SQL_user_frezen_detail, config.SQL_pay_detail], order)
                     c = t_data[0]
                     d = t_data[1]
                     if c[0] == 3 and c[1] !='' and c[2] == 2 and d[0] == 3 and d[1] == a[6] and d[2] == 6:
@@ -238,8 +273,7 @@ class check_status(object):
 
             elif a[8] == 8 or a[8] == 13:
                 try:
-                    t_data = tools.pull_data(config.DB_CONFIG_WELFARE, [config.SQL_account_freeze, config.SQL_welfare_turnover],
-                                         order)
+                    t_data = tools.pull_data(db_welfare, [config.SQL_account_freeze, config.SQL_welfare_turnover], order)
                     c = t_data[0]
                     d = t_data[1]
                     if c[0] != '' and c[1] == 0 and d[0] == 0 and d[1] == 2 and d[2] == 3 and d[3] == '滴滴出行' and d[4] == a[6] and d[6] == 3:
@@ -253,12 +287,18 @@ class check_status(object):
             else:
                 false[order] = '订单类型错误！'
                 continue
+        tools.db_disconnect(db_buy)
+        tools.db_disconnect(db_tc)
+        tools.db_disconnect(db_welfare)
         return false
 
     def check_20019(order_list):
         false = {}
+        db_buy = tools.db_connect(config.DB_CONFIG_BUY)
+        db_tc = tools.db_connect(config.DB_CONFIG_TC)
+        db_welfare = tools.db_connect(config.DB_CONFIG_WELFARE)
         for order in order_list:
-            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new2], order)
+            b_data = tools.pull_data(db_buy, [config.SQL_buy_order_new2], order)
             a = b_data[0]
             if a[5] == 0:
                 if a[0] == 2 and a[1] == 18 and a[2] != '':
@@ -268,7 +308,7 @@ class check_status(object):
                     continue
 
                 try:
-                    c_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order1], order)
+                    c_data = tools.pull_data(db_buy, [config.SQL_car_order1], order)
                     b = c_data[0]
                     if b[0] == 3 and all(x != '' for x in b):
                         pass
@@ -280,7 +320,7 @@ class check_status(object):
 
                 if a[8] == 0:
                     try:
-                        t_data = tools.pull_data(config.DB_CONFIG_TC, [config.SQL_user_frezen_detail], order)
+                        t_data = tools.pull_data(db_tc, [config.SQL_user_frezen_detail], order)
                         c = t_data[0]
                         if c[0] == 3 and c[1] != '' and c[2] == 2:
                             pass
@@ -292,7 +332,7 @@ class check_status(object):
 
                 if a[8] == 8 or a[8] == 13:
                     try:
-                        t_data = tools.pull_data(config.DB_CONFIG_WELFARE, [config.SQL_account_freeze], order)
+                        t_data = tools.pull_data(db_welfare, [config.SQL_account_freeze], order)
                         c = t_data[0]
                         if c[0] != '' and c[1] == 0:
                             pass
@@ -310,7 +350,7 @@ class check_status(object):
                     continue
 
                 try:
-                    c_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_car_order3], order)
+                    c_data = tools.pull_data(db_buy, [config.SQL_car_order3], order)
                     b = c_data[0]
                     if b[0] == 3 and all(x != '' for x in b):
                         pass
@@ -322,8 +362,7 @@ class check_status(object):
 
                 if a[8] == 0:
                     try:
-                        t_data = tools.pull_data(config.DB_CONFIG_TC,
-                                             [config.SQL_user_frezen_detail, config.SQL_pay_detail], order)
+                        t_data = tools.pull_data(db_tc, [config.SQL_user_frezen_detail, config.SQL_pay_detail], order)
                         c = t_data[0]
                         d = t_data[1]
                         if c[0] == 3 and c[1] != '' and c[2] == 2 and d[0] == 3 and d[1] == a[6] and d[2] == 6:
@@ -336,9 +375,7 @@ class check_status(object):
 
                 elif a[8] == 8 or a[8] == 13:
                     try:
-                        t_data = tools.pull_data(config.DB_CONFIG_WELFARE,
-                                             [config.SQL_account_freeze, config.SQL_welfare_turnover],
-                                             order)
+                        t_data = tools.pull_data(db_welfare, [config.SQL_account_freeze, config.SQL_welfare_turnover], order)
                         c = t_data[0]
                         d = t_data[1]
                         if c[0] != '' and c[1] == 0 and d[0] == 0 and d[1] == 2 and d[2] == 3 and d[3] == '滴滴出行' and d[4] == \
@@ -349,13 +386,19 @@ class check_status(object):
                             continue
                     except:
                         false[order] = 'account_freeze/welfare_turnover表校验失败！'
+        tools.db_disconnect(db_buy)
+        tools.db_disconnect(db_tc)
+        tools.db_disconnect(db_welfare)
         return false
 
 
     def check_20021(order_list):
         false = {}
+        db_buy = tools.db_connect(config.DB_CONFIG_BUY)
+        db_tc = tools.db_connect(config.DB_CONFIG_TC)
+        db_welfare = tools.db_connect(config.DB_CONFIG_WELFARE)
         for order in order_list:
-            b_data = tools.pull_data(config.DB_CONFIG_BUY, [config.SQL_buy_order_new1, config.SQL_car_order1], order)
+            b_data = tools.pull_data(db_buy, [config.SQL_buy_order_new1, config.SQL_car_order1], order)
             a = b_data[0]
             if a[0] == 2 and a[1] == 18 and a[2] != '' and a[3] == 0:
                 pass
@@ -375,7 +418,7 @@ class check_status(object):
 
             if a[4] == 0:
                 try:
-                    t_data = tools.pull_data(config.DB_CONFIG_TC, [config.SQL_user_frezen_detail], order)
+                    t_data = tools.pull_data(db_tc, [config.SQL_user_frezen_detail], order)
                     c = t_data[0]
                     if c[0] == 3 and c[1] != '' and c[2] == 2:
                         pass
@@ -387,7 +430,7 @@ class check_status(object):
 
             if a[4] == 8 or a[4] == 13:
                 try:
-                    t_data = tools.pull_data(config.DB_CONFIG_WELFARE, [config.SQL_account_freeze], order)
+                    t_data = tools.pull_data(db_welfare, [config.SQL_account_freeze], order)
                     c = t_data[0]
                     if c[0] != '' and c[1] == 0:
                         pass
@@ -396,6 +439,9 @@ class check_status(object):
                         continue
                 except:
                     false[order] = 'account_freeze表校验失败！'
+        tools.db_disconnect(db_buy)
+        tools.db_disconnect(db_tc)
+        tools.db_disconnect(db_welfare)
         return false
 
 

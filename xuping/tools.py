@@ -36,25 +36,38 @@ def pull_data(sub_status):
         conn.close()
         return s
 
+'''连接DB'''
+def db_connect(db_config):
+    try:
+        conn = pymysql.connect(**db_config)
+        return conn
+    except:
+        logging.error("DB连接错误", exc_info=True)
+
+
+'''断开链接DB'''
+def db_disconnect(conn):
+    try:
+        conn.close()
+    except:
+        logging.error("DB连接错误", exc_info=True)
+
 '''拉取db库数据'''
-def pull_data(db_config, table_list, order_sub_status):
+def pull_data(conn, table_list, order_sub_status):
     try:
         s = []
-        conn = pymysql.connect(**db_config)
         cursor = conn.cursor()
         for x in table_list:
             cursor.execute(x%(order_sub_status))
             result = cursor.fetchall()
             for x in list(result):
                 s.append(list(x))
+        return s
 
     except:
+        cursor.close()
         logging.error("DB连接错误", exc_info=True)
 
-    finally:
-        conn.close()
-        # print(s)
-        return s
 
 '''Excel表格格式优化'''
 def sheet_layout(ws):

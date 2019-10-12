@@ -22,7 +22,10 @@ if __name__ == "__main__":
         a = input()
         if a == '1':
             try:
+                start = time.time()
                 get_db_price(file)
+                end = time.time()
+                print(end - start)
                 print('数据加载成功！')
             except:
                 logging.error("哎呀，出错了！", exc_info=True)
@@ -33,6 +36,7 @@ if __name__ == "__main__":
                 ws.title = '数据校验结果' + time.strftime("%H-%M-%S", time.localtime())
                 ws.append(['订单子状态','订单号', '出错字段'])
 
+                start = time.time()
                 for x in ('20001', '20003', '20007', '20009'):
                     ws1 = wb.get_sheet_by_name('订单状态%s'% x)
                     listx = [ws1.cell(x, 1).value for x in range(2, ws1.max_row + 1)]
@@ -53,13 +57,20 @@ if __name__ == "__main__":
                     for k in list(false.keys()):
                         ws.append([x, k, false[k]])
 
-                # ws1 = wb.get_sheet_by_name('订单状态20021')
+                end = time.time()
+                print(end - start)
+                # ws1 = wb.get_sheet_by_name('订单状态20001')
                 # listx = [ws1.cell(x, 1).value for x in range(2, ws1.max_row + 1)]
-                # false = check_status.check_20021(listx)
-                # print('校验状态20021数据%s条。' % (len(listx)))
+                #
+                # start = time.time()
+                # false = check_status.check_20001(listx)
+                # end = time.time()
+                # print(end - start)
+                #
+                # print('校验状态20001数据%s条。' % (len(listx)))
                 # print('其中%s条数据异常。\n' % (len(false)))
                 # for k in list(false.keys()):
-                #     ws.append(['20021', k, false[k]])
+                #     ws.append(['20001', k, false[k]])
 
                 tools.sheet_layout(ws)
                 for col in ['A', 'B', 'C']:
