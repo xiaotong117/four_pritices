@@ -133,3 +133,7 @@ class MysqlFunction:
             logger.error('执行数据库查询操作失败：%s' % e)
             dbCursor.close()
             exit()
+
+
+a = {'order_id': '010031909030000000473095', 'source_app': 13, 'price': 26684, 'update_user_name': '张童'}
+print(type(a.values()))

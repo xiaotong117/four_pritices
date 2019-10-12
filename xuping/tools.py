@@ -56,12 +56,20 @@ def db_disconnect(conn):
 def pull_data(conn, table_list, order_sub_status):
     try:
         s = []
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
         for x in table_list:
-            cursor.execute(x%(order_sub_status))
+            cursor.execute(x%(order_sub_status, ))
+            # data_title = []
+            # for field in cursor.description:
+            #     data_title.append(field[0])
             result = cursor.fetchall()
-            for x in list(result):
-                s.append(list(x))
+            # for x in result:
+            #     data_dict = {}
+            #     for y in range(len(x)):
+            #         data_dict[data_title[y]] = x[y]
+            #     s.append(data_dict)
+            s.append(result)
+        print(s)
         return s
 
     except:

@@ -27,8 +27,8 @@ DB_CONFIG_WELFARE = {
 }
 
 '''订单表数据SQL查询语句'''
-SQL_order_price = 'select order_id,source_app,price,update_user_name,gmt_create ' \
-                  'from buy_order_new where biz_type = 3 and order_sub_status = %s ' \
+SQL_order_price = 'select order_id,order_sub_status,source_app,price,update_user_name,gmt_create ' \
+                  'from buy_order_new where biz_type = 3 and order_sub_status in %s ' \
                   'order by id desc'
 
 # '''第三方数据SQL查询语句'''
@@ -36,7 +36,7 @@ SQL_order_price = 'select order_id,source_app,price,update_user_name,gmt_create 
 #                   'and order_status = 12'
 
 '''拉取buy_order_new数据'''
-SQL_buy_order_new1 = 'select order_type,order_status,third_id,price,source_app from buy_order_new where order_id = \'%s\''
+SQL_buy_order_new1 = 'select order_type,order_status,third_id,price,source_app from buy_order_new where order_id in (%s)'
 SQL_buy_order_new2 = 'select order_type,order_status,third_id,gmt_pay,gmt_settlement_time,price,should_price,integral_price,source_app from buy_order_new where order_id = \'%s\''
 
 
