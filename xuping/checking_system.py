@@ -36,38 +36,39 @@ if __name__ == "__main__":
                 ws.title = '数据校验结果' + time.strftime("%H-%M-%S", time.localtime())
                 ws.append(['订单子状态','订单号', '出错字段'])
 
-                start = time.time()
-                for x in ('20001', '20003', '20007', '20009'):
-                    ws1 = wb.get_sheet_by_name('订单状态%s'% x)
-                    listx = [ws1.cell(x, 1).value for x in range(2, ws1.max_row + 1)]
+                # for x in ['20001', '20003', '20007', '20009']:
+                for x in ['20001']:
+                    ws1 = wb.get_sheet_by_name('滴滴订单')
+                    listx = [ws1.cell(y, 1).value for y in range(2, ws1.max_row + 1) if ws1.cell(y, 2).value == int(x)]
+                    print('校验状态%s数据%s条。'%(x, len(listx)))
                     false = check_status.check_base(listx)
-                    c = {'20001':check_status.check_20001(listx), '20003':check_status.check_20003(listx), '20007':check_status.check_20007(listx), '20009':check_status.check_20009(listx)}[x]
+                    # c = {'20001':check_status.check_20001(listx), '20003':check_status.check_20003(listx), '20007':check_status.check_20007(listx), '20009':check_status.check_20009(listx)}[x]
+                    c = {'20001':check_status.check_20001(listx)}[x]
+
                     false.update(c)
-                    print('校验状态%s数据%s条。'%(x, len(listx)))
                     print('其中%s条数据异常。\n'%(len(false)))
                     for k in list(false.keys()):
                         ws.append([x, k, false[k]])
 
-                for x in ('20017', '20019', '20021'):
-                    ws1 = wb.get_sheet_by_name('订单状态%s'% x)
-                    listx = [ws1.cell(x, 1).value for x in range(2, ws1.max_row + 1)]
-                    false = {'20017':check_status.check_20017(listx), '20019':check_status.check_20019(listx), '20021':check_status.check_20021(listx)}[x]
-                    print('校验状态%s数据%s条。'%(x, len(listx)))
-                    print('其中%s条数据异常。\n'%(len(false)))
-                    for k in list(false.keys()):
-                        ws.append([x, k, false[k]])
+                # for x in ('20017', '20019', '20021'):
+                #     ws1 = wb.get_sheet_by_name('滴滴订单')
+                #     listx = [ws1.cell(y, 1).value for y in range(2, ws1.max_row + 1) if ws1.cell(y, 2).value == int(x)]
+                #     print('校验状态%s数据%s条。'%(x, len(listx)))
+                #     false = {'20017':check_status.check_20017(listx), '20019':check_status.check_20019(listx), '20021':check_status.check_20021(listx)}[x]
+                #     print('其中%s条数据异常。\n'%(len(false)))
+                #     for k in list(false.keys()):
+                #         ws.append([x, k, false[k]])
 
-                end = time.time()
-                print(end - start)
-                # ws1 = wb.get_sheet_by_name('订单状态20001')
-                # listx = [ws1.cell(x, 1).value for x in range(2, ws1.max_row + 1)]
+
+                # ws1 = wb.get_sheet_by_name('滴滴订单')
+                # xxx = '20001'
                 #
-                # start = time.time()
-                # false = check_status.check_20001(listx)
-                # end = time.time()
-                # print(end - start)
-                #
+                # listx = [ws1.cell(x, 1).value for x in range(2, ws1.max_row + 1) if ws1.cell(x, 2).value == int(xxx)]
+                # # listx = []
+                # # for x in listy:
+                # #     listx.append(x)
                 # print('校验状态20001数据%s条。' % (len(listx)))
+                # false = check_status.check_20001(listx)
                 # print('其中%s条数据异常。\n' % (len(false)))
                 # for k in list(false.keys()):
                 #     ws.append(['20001', k, false[k]])

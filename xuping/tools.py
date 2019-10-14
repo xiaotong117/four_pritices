@@ -53,12 +53,12 @@ def db_disconnect(conn):
         logging.error("DB连接错误", exc_info=True)
 
 '''拉取db库数据'''
-def pull_data(conn, table_list, order_sub_status):
+def pull_data(conn, table_list, parameter):
     try:
         s = []
         cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
         for x in table_list:
-            cursor.execute(x%(order_sub_status, ))
+            cursor.execute(x%(parameter, ))
             # data_title = []
             # for field in cursor.description:
             #     data_title.append(field[0])
@@ -69,7 +69,7 @@ def pull_data(conn, table_list, order_sub_status):
             #         data_dict[data_title[y]] = x[y]
             #     s.append(data_dict)
             s.append(result)
-        print(s)
+        # print(s)
         return s
 
     except:

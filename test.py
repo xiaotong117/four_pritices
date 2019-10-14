@@ -135,5 +135,5 @@ class MysqlFunction:
             exit()
 
 
-a = {'order_id': '010031909030000000473095', 'source_app': 13, 'price': 26684, 'update_user_name': '张童'}
-print(type(a.values()))
+a = [{'1':1},2,3,4]
+print(a[0]['1'])
